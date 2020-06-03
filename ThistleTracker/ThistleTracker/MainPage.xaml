@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ThistleTracker.MainPage">
+
+        <!-- Button Grid -->
+    <!--<Grid HorizontalOptions="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="100"/>
+            <RowDefinition  Height="100"/>
+            <RowDefinition  Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="50" />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="1" Grid.Column="1" Text="Distel" Clicked="WeedButton_Clicked"/>
+        <Button Grid.Row="1" Grid.Column="2" Text="Ackerwinde" Clicked="WeedButton_Clicked"/>
+        <Button Grid.Row="2" Grid.Column="1" Text="Hundspetersilie" Clicked="WeedButton_Clicked"/>
+        <Button Grid.Row="2" Grid.Column="2" Text="Gras" Clicked="WeedButton_Clicked"/>
+        <Button Grid.Row="3" Grid.Column="1" Text="Schachtelhalm" Clicked="WeedButton_Clicked"/>
+        <Button Grid.Row="3" Grid.Column="2" Text="Windenknöterich" Clicked="WeedButton_Clicked"/>
+    </Grid> -->
+    <StackLayout>
+        <Label Text="ThistleTracker" HorizontalOptions="Center"/>
+        <FlexLayout Wrap="Wrap" JustifyContent="SpaceAround">
+        <Button WidthRequest="120" HeightRequest="120" Text="Distel" Clicked="WeedButton_Clicked"/>
+        <Button WidthRequest="120" HeightRequest="120" Text="Ackerwinde" Clicked="WeedButton_Clicked"/>
+        <Button WidthRequest="120" HeightRequest="120" Text="Hundspetersilie" Clicked="WeedButton_Clicked"/>
+        <Button WidthRequest="120" HeightRequest="120" Text="Gras" Clicked="WeedButton_Clicked"/>
+        <Button WidthRequest="120" HeightRequest="120" Text="Schachtelhalm" Clicked="WeedButton_Clicked"/>
+        <Button WidthRequest="120" HeightRequest="120" Text="Windenknöterich" Clicked="WeedButton_Clicked"/>
+        <Button WidthRequest="120" HeightRequest="120" Text="Anderes Unkraut" Clicked="WeedButton_Clicked"/>
+    </FlexLayout>
+        <ListView x:Name="SpotsListView"
+                  ItemsSource="{Binding WeedSpots}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding DisplayName}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
