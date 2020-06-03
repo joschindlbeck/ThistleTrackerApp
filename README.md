@@ -1,2 +1,2 @@
 # ThistleTrackerApp
-A smartphone app to tack thistles and other weed in the field
+A smartphone app to track thistles and other weed in the field
