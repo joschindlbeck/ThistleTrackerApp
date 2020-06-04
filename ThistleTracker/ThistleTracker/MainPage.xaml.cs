@@ -46,5 +46,19 @@ namespace ThistleTracker
             ThistleTracker._spots.Add(spot);
 
         }
+
+        private async void ToolbarItemSave_Clicked(object sender, EventArgs e)
+        {
+            await ThistleTracker.SaveAsKmlAsync();
+        }
+        private async void ToolbarItemClear_ClickedAsync(object sender, EventArgs e)
+        {
+            // clear list
+            bool doClear = await DisplayAlert("Clear List", "Do you really want to clear the list?", "Yes", "No");
+            if (doClear)
+            {
+                ThistleTracker._spots.Clear();
+            }
+        }
     }
 }
