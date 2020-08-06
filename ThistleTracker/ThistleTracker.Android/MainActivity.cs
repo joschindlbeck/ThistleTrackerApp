@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using ThistleTracker;
 
 namespace ThistleTracker.Droid
 {
@@ -22,7 +23,26 @@ namespace ThistleTracker.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+
+            // set location service
+            try
+            {
+                App.init(new AndroidLocationService(this));
+            }catch(Exception e)
+            {
+                // exception occurred!
+                string msg = "Exception during Location Service initilization: \"" + e.Message + "\" Using fallback LocationService!";
+                Toast toast = Toast.MakeText(this, msg, ToastLength.Short);
+                toast.Show();
+                App.init(locationServiceImpl: new LocationServiceXamEss());
+            }
+
+            // set Path to external storage directory
+            App.externalStorageDirectoryPath = this.GetExternalFilesDir(null).AbsolutePath;
+            App.externalStorageDirectoryDocumentsPath = this.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments).AbsolutePath;
+            
         }
+            
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

@@ -25,20 +25,30 @@
         <Button Grid.Row="3" Grid.Column="2" Text="Windenknöterich" Clicked="WeedButton_Clicked"/>
     </Grid> -->
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save to KML" Priority="0" Order="Primary" Clicked="ToolbarItemSave_Clicked"/>
+        <ToolbarItem Text="Save" Priority="0" Order="Primary" Clicked="ToolbarItemSave_Clicked"/>
         <ToolbarItem Text="Clear" Priority="1" Order="Primary" Clicked="ToolbarItemClear_ClickedAsync" />
+        <ToolbarItem Text="Export" Priority="1" Order="Secondary" Clicked="ToolbarItemExport_Clicked"/>
+        
 
     </ContentPage.ToolbarItems>
     <StackLayout>
-        <FlexLayout Wrap="Wrap" JustifyContent="SpaceAround">
-        <Button WidthRequest="120" HeightRequest="120" Text="Distel" Clicked="WeedButton_Clicked"/>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Latitudde:" HorizontalOptions="Start" Padding="10"/>
+            <Label x:Name="lblLat" Text="{Binding lat}" HorizontalOptions="StartAndExpand" Padding="10"/>
+            <Label Text="Longitude:" HorizontalOptions="End" Padding="10"/>
+            <Label x:Name="lblLong" Text="{Binding lon}" HorizontalOptions="EndAndExpand" Padding="10"/>
+        </StackLayout>
+        <FlexLayout Wrap="Wrap" JustifyContent="SpaceAround" VerticalOptions="Fill" Direction="Row" x:Name="flButtons">
+        <!--
+            <Button WidthRequest="120" HeightRequest="120" Text="Distel" Clicked="WeedButton_Clicked" CornerRadius="-1"/>
         <Button WidthRequest="120" HeightRequest="120" Text="Ackerwinde" Clicked="WeedButton_Clicked"/>
         <Button WidthRequest="120" HeightRequest="120" Text="Hundspetersilie" Clicked="WeedButton_Clicked"/>
         <Button WidthRequest="120" HeightRequest="120" Text="Gras" Clicked="WeedButton_Clicked"/>
         <Button WidthRequest="120" HeightRequest="120" Text="Schachtelhalm" Clicked="WeedButton_Clicked"/>
         <Button WidthRequest="120" HeightRequest="120" Text="Windenknöterich" Clicked="WeedButton_Clicked"/>
         <Button WidthRequest="120" HeightRequest="120" Text="Anderes Unkraut" Clicked="WeedButton_Clicked"/>
-    </FlexLayout>
+        -->
+            </FlexLayout>
         <ListView x:Name="SpotsListView"
                   ItemsSource="{Binding WeedSpots}">
             <ListView.ItemTemplate>

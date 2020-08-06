@@ -25,6 +25,8 @@ namespace ThistleTracker.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
+            App.init(new iOSLocationService());
+
             return base.FinishedLaunching(app, options);
         }
     }
