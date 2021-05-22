@@ -36,6 +36,17 @@ namespace ThistleTracker
         public async System.Threading.Tasks.Task ExportAsKmlAsync()
         {
             Kml kml = createKML();
+            await Export(kml);
+        }
+
+        public async System.Threading.Tasks.Task ExportAsKmlPolygonAsync()
+        {
+            Kml kml = createKMLPolygon();
+            await Export(kml);
+        }
+
+        private static async Task Export(Kml kml)
+        {
             string fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ThistleTracker.kml");
             // delete if existing
             if (File.Exists(fileName))
@@ -62,17 +73,27 @@ namespace ThistleTracker
         {
             // create KML
             Kml kml = createKML();
+            return await SaveToStorage(kml);
+        }
 
+        public async System.Threading.Tasks.Task<string> SaveAsKmlPolygonAsync()
+        {
+            // create KML
+            Kml kml = createKMLPolygon();
+            return await SaveToStorage(kml);
+        }
 
+        private static async Task<string> SaveToStorage(Kml kml)
+        {
             // get external / shared storage for documents
             PCLStorage.IFolder rootFolder = await PCLStorage.FileSystem.Current.GetFolderFromPathAsync(App.externalStorageDirectoryDocumentsPath);
             Debug.WriteLine("RootFolder " + rootFolder.Path);
-            StringBuilder fileName = new StringBuilder("ThistleTracker_").Append(DateTime.Now.ToString("yyyyMMdd")).Append(".kml");         
+            StringBuilder fileName = new StringBuilder("ThistleTracker_").Append(DateTime.Now.ToString("yyyyMMdd")).Append(".kml");
             PCLStorage.IFile file = await rootFolder.CreateFileAsync(fileName.ToString(), PCLStorage.CreationCollisionOption.GenerateUniqueName);
-            
+
             //Create KML file
             KmlFile kmlFile = KmlFile.Create(kml, true);
-            using(FileStream stream = (FileStream)await file.OpenAsync(PCLStorage.FileAccess.ReadAndWrite))
+            using (FileStream stream = (FileStream)await file.OpenAsync(PCLStorage.FileAccess.ReadAndWrite))
             {
                 kmlFile.Save(stream);
             }
@@ -101,6 +122,38 @@ namespace ThistleTracker
                 document.AddFeature(place);
             }
 
+            return kml;
+        }
+
+        private Kml createKMLPolygon()
+        {
+            Kml kml = new Kml();
+            Document document = new Document();
+            document.Name = "Polygon from ThistleTracker";
+            kml.Feature = document;
+
+            // Create Polygon
+            LinearRing linearRing = new LinearRing();
+            linearRing.Coordinates = new CoordinateCollection();
+            // Loop & add weedspots
+            foreach (WeedSpot spot in _spots)
+            {
+                linearRing.Coordinates.Add(new Vector(spot.Latitude, spot.Longitude, spot.Altitude));
+            }
+
+            //add the first coordinate to close the ring
+            if (_spots.Count > 0)
+            {
+                linearRing.Coordinates.Add(new Vector(_spots[0].Latitude, _spots[0].Longitude, _spots[0].Altitude));
+            }
+            OuterBoundary outerBoundary = new OuterBoundary();
+            outerBoundary.LinearRing = linearRing;
+            SharpKml.Dom.Polygon polygon = new SharpKml.Dom.Polygon();
+            polygon.OuterBoundary = outerBoundary;
+            SharpKml.Dom.Placemark place = new SharpKml.Dom.Placemark();
+            place.Geometry = polygon;
+            document.AddFeature(place);
+            
             return kml;
         }
     }

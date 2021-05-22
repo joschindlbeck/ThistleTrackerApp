@@ -91,5 +91,20 @@ namespace ThistleTracker
         {
             await ThistleTracker.ExportAsKmlAsync();
         }
+
+        private async void ToolbarItemExportPolygon_Clicked(object sender, EventArgs e)
+        {
+            await ThistleTracker.ExportAsKmlPolygonAsync();
+        }
+        private async void ToolbarItemSavePolygon_Clicked(object sender, EventArgs e)
+        {
+            string fileName = await ThistleTracker.SaveAsKmlPolygonAsync();
+            //display message
+            bool doClear = await DisplayAlert("File Saved", "File saved to " + fileName + ". Do you want to clear the list?", "Yes", "No");
+            if (doClear)
+            {
+                ThistleTracker._spots.Clear();
+            }
+        }
     }
 }

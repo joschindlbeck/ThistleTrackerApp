@@ -28,7 +28,8 @@
         <ToolbarItem Text="Save" Priority="0" Order="Primary" Clicked="ToolbarItemSave_Clicked"/>
         <ToolbarItem Text="Clear" Priority="1" Order="Primary" Clicked="ToolbarItemClear_ClickedAsync" />
         <ToolbarItem Text="Export" Priority="1" Order="Secondary" Clicked="ToolbarItemExport_Clicked"/>
-        
+        <ToolbarItem Text="Export as Polygon" Priority="2" Order="Secondary" Clicked="ToolbarItemExportPolygon_Clicked"/>
+        <ToolbarItem Text="Save as Polygon" Priority="3" Order="Secondary" Clicked="ToolbarItemSavePolygon_Clicked"/>
 
     </ContentPage.ToolbarItems>
     <StackLayout>
